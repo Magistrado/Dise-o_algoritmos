@@ -1,3 +1,14 @@
+/*
+    Nombre: Edgar Valderrama
+            Daniel Leones       09-10977
+    Fecha: 17/2/2017
+    Descripción: Resolución de PRPP usando un algoritmo greedy.
+
+    Ejecución: ./solver_prpp /camino/a/instancia 1
+    Colocar 1 como segundo arg dado que se requiere que retorne al mismo punto donde
+    parte. 
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,6 +19,9 @@
 
 using namespace std;
 
+/*
+    Funciones auxiliares para dividir lineas 
+*/
 void split(const string &s, char delim, vector<string> &elems) {
     stringstream ss;
     ss.str(s);
@@ -23,6 +37,9 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
+/*
+    Estructuras para las aristas
+*/
 struct Arista {
     int v1;
     int v2;
@@ -31,6 +48,10 @@ struct Arista {
     int t;
 };
 
+
+/*
+    Función objeto para ordenamiento en la cola de prioridades usada por el algoritmo greedy
+*/
 
 class Comparar
 {
@@ -41,6 +62,10 @@ public:
     }
 };
 
+
+/*
+    Funciones generales de impresión
+*/
 
 void imprimirVector(vector<Arista*> &adya) {
     for (vector<Arista*>::iterator i = adya.begin(); i != adya.end(); ++i)
@@ -66,6 +91,10 @@ void imprimirParCola(const pair<int, Arista *> &it) {
         << (it.second)->t << ")\n";
 }
 
+/*
+    Borrar Aristas en los vectores de lo grafos
+*/
+
 void borrarAristas(vector<Arista*> &v) {
     for (vector<Arista*>::iterator i = v.begin(); i != v.end(); ++i) {
         if (*i == nullptr){
@@ -74,6 +103,10 @@ void borrarAristas(vector<Arista*> &v) {
         }
     }
 }
+
+/*
+    Cargador de instancias para el ejemplo del enunciado
+*/
 
 void cargarEjem(string camino, map<int, vector< Arista* > > &grafo) {
     ifstream in(camino);
@@ -133,6 +166,14 @@ void cargarInstancias(string camino, map<int, vector< Arista* > > &grafo) {
     in.close();
 }
 
+/*
+    Algoritmo greedy a probar. Se apoya en una cola de prioridades para
+    ordenar las aristas de mayor beneficio calculado incluyendo costos negativos. 
+    Al tomar una decisión, pasa a otro vertice y borra la cola. 
+
+    Retorna: el mayor beneficio alcanzado al regresar a 1.
+*/
+
 int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
                         vector<int> &camino) 
 {
@@ -188,6 +229,11 @@ int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
 }
 
 
+/*
+    Programa principal.
+
+*/
+
 int main(int argc, const char *argv[]) {
 
     //ofstream out("resultados.txt"); 
@@ -208,7 +254,7 @@ int main(int argc, const char *argv[]) {
     imprimirCamino(camino);
 
     cout << "\nDEBUGGING\nImprimir mi grafo" << endl;
-    for (it = grafo.begin(); it != grafo.end(); ++it) { // calls a_map.begin() and a_map.end()
+    for (it = grafo.begin(); it != grafo.end(); ++it) {
         cout << it->first << '\n';
         imprimirVector(it->second);
     }
