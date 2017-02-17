@@ -20,12 +20,11 @@ struct Arista {
 class Comparar
 {
 public:
-    bool operator()(pair<int,int> a, pair<int,int> b)
+    bool operator()(pair<int, Arista * > a, pair<int, Arista *> b)
     {
         return a.first < b.first;
     }
 };
-
 
 
 void imprimirVector(vector<Arista*> &adya) {
@@ -37,8 +36,16 @@ void imprimirVector(vector<Arista*> &adya) {
     }
 }
 
-void imprimirCola(pair<int,int> it) {
-    cout << "ben=" << it.first << " v2=" << it.second << '\n';
+/*string imprimirArista (const Arista &i) {
+    cout << "(v1: " << i.v1 << ",v2: " << i.v2 << ",Costo: " 
+            << i.c << ", Beneficio: "
+            << i.b << ",#: " << i.t << ")" << endl;
+}*/
+
+void imprimirParCola(const pair<int, Arista *> &it) {
+    cout << "(ben=" << it.first << ", (" << (it.second)->v1 
+        << "-->" << (it.second)->v2 << ")" << ",#:" 
+        << (it.second)->t << ")\n";
 }
 
 void borrarAristas(vector<Arista*> &v) {
@@ -54,8 +61,8 @@ int main(int argc, const char *argv[]) {
     int v1, v2, c, b, maxB;
     Arista* lado;
     map<int, vector< Arista* > > grafo;
-    priority_queue< pair<int,int>, // (beneficio, vertice_2) 
-        vector< pair<int,int> >, Comparar > ladosMaximos;
+    priority_queue< pair<int,Arista * >, // (beneficio, vertice_2) 
+        vector< pair<int, Arista * > >, Comparar > ladosMaximos;
     //Iteradores 
     map<int, vector< Arista* > >::iterator it;
     vector< Arista* >::iterator itv;
@@ -72,20 +79,14 @@ int main(int argc, const char *argv[]) {
         lado = new Arista { v1, v2, c, b, 0 };
         grafo[v1].push_back(lado);
         grafo[v2].push_back(lado);
-        //lado = { v1, c, b, 1 };
     }
 
-    cout << "Imprimir mi grafo" << endl;
-    for (it = grafo.begin(); it != grafo.end(); ++it) { // calls a_map.begin() and a_map.end()
-        cout << it->first << '\n';
-        imprimirVector(it->second);
-        //borrarAristas(it->second);
-    }
 
 
     // Prueba del algoritmo greedy
-    cout << "Objetivo=" << verticeObj << endl;
     int acumulado = 0, vertice = 1, ben = 0;
+    bool final = false;
+    cout << "\nObjetivo=" << verticeObj << endl;
     do
     {   
         cout << "\nVertice:"  << vertice << " acumulado: " << acumulado << endl;
@@ -94,43 +95,51 @@ int main(int argc, const char *argv[]) {
             {
                 if ((*itv)->t == 0) {
                     ben = (*itv)->b-((*itv)->c);
-
                 } else {
                     ben = -((*itv)->c*(*itv)->t);
-                    cout << "prueba" << endl;
                 }
 
-                (*itv)->t += 1;
-                if ((*itv)->v2 == vertice && (*itv)->v1 != vertice)
-                    ladosMaximos.push(pair<int,int>(ben,(*itv)->v1));
-
-                if ((*itv)->v1 == vertice && (*itv)->v2 != vertice)
-                    ladosMaximos.push(pair<int,int>(ben,(*itv)->v2));
+                ladosMaximos.push(pair<int, Arista *>(ben,*itv));
             }
         }
 
         // Imprimir el resultado
-
-        //visitado[vertice] += 1;
-
+        //cout << "Lado escogido: ";
+        //imprimirParCola(ladosMaximos.top());
         
-        cout << "(b=" << ladosMaximos.top().first << ",(" << vertice 
-            << ", " << ladosMaximos.top().second << "))" << endl;
-
         acumulado += ladosMaximos.top().first;
-        vertice = ladosMaximos.top().second;
+        // Contar visita para tal lado
 
+        ladosMaximos.top().second->t += 1;
+        cout << "Proximo: ";
+        if (ladosMaximos.top().second->v2 == vertice ) {
+            //&& ladosMaximos.top().second->v1 != vertice)
+            cout << "(" << ladosMaximos.top().second->v1 << "<--" 
+                      << ladosMaximos.top().second->v2 << ")" << endl;
+            vertice = ladosMaximos.top().second->v1;
+        } else if (ladosMaximos.top().second->v1 == vertice) {
+            //&& ladosMaximos.top().second->v2 != vertice)
+            cout << "(" << ladosMaximos.top().second->v1 << "-->" 
+                      << ladosMaximos.top().second->v2 << ")" << endl;
+            vertice = ladosMaximos.top().second->v2;
+        }
+
+        cout << "Cola de prioridades: " << endl;
         while (!ladosMaximos.empty()) {
-            imprimirCola(ladosMaximos.top());
+            imprimirParCola(ladosMaximos.top());
             ladosMaximos.pop();
         }
 
-        //cout << visitado[verticeObj] << endl;
     } while ( vertice != verticeObj);
 
     cout << "Maximo beneficio: " << acumulado << endl;
+    cout << "\nImprimir mi grafo" << endl;
+    for (it = grafo.begin(); it != grafo.end(); ++it) { // calls a_map.begin() and a_map.end()
+        cout << it->first << '\n';
+        imprimirVector(it->second);
+        // Liberar memoria
+    }
 
-    // Liberar memoria
     for (it = grafo.begin(); it != grafo.end(); ++it) {
         borrarAristas(it->second);
     }
