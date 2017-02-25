@@ -46,8 +46,9 @@ struct Arista {
     int c;
     int b;
     int t;
+    int ida;
+    int vuelta;
 };
-
 
 /*
     Función objeto para ordenamiento en la cola de prioridades usada por el algoritmo greedy
@@ -72,7 +73,8 @@ void imprimirVector(vector<Arista*> &adya) {
     {
         cout << "    v1: " << (*i)->v1 << " v2: " << (*i)->v2 << " Costo: " 
             << (*i)->c << " Beneficio: "
-            << (*i)->b << " #: " << (*i)->t<< endl;
+            << (*i)->b << " #: " << (*i)->t << " Ida: " << (*i)->ida
+            << " Vuelta: " << (*i)->vuelta << endl;
     }
 }
 
@@ -88,7 +90,8 @@ void imprimirCamino(vector<int> &camino) {
 void imprimirParCola(const pair<int, Arista *> &it) {
     cout << "(ben=" << it.first << ", (" << (it.second)->v1 
         << "-->" << (it.second)->v2 << ")" << ",#:" 
-        << (it.second)->t << ")\n";
+        << (it.second)->t << ")" << " Ida: " << (it.second)->ida << " Vuelta: "
+	<< (it.second)->vuelta << endl;
 }
 
 /*
@@ -140,7 +143,7 @@ void cargarInstancias(string camino, map<int, vector< Arista* > > &grafo) {
     {
         in >> v1 >> v2 >> c >> b;
         //cout << v1 << " " << v2 << endl;
-        lado = new Arista { v1, v2, c, b, 0 };
+        lado = new Arista { v1, v2, c, b, 0, 0, 0};
         grafo[v1].push_back(lado);
         grafo[v2].push_back(lado);
     }
@@ -159,7 +162,7 @@ void cargarInstancias(string camino, map<int, vector< Arista* > > &grafo) {
     {
         in >> v1 >> v2 >> c >> b;
         //cout << v1 << " " << v2 << endl;
-        lado = new Arista { v1, v2, c, b, 0 };
+        lado = new Arista { v1, v2, c, b, 0, 0, 0};
         grafo[v1].push_back(lado);
         grafo[v2].push_back(lado);
     }
@@ -183,7 +186,9 @@ int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
         vector< pair<int, Arista * > >, Comparar > ladosMaximos;
     //Iteradores 
     vector< Arista* >::iterator itv;
-
+    Arista *arista;
+    auto grafoIt = grafo.cbegin();
+       
     camino.push_back(vertice);
     do
     {   
@@ -196,23 +201,37 @@ int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
                 } else {
                     ben = -((*itv)->c*(*itv)->t);
                 }
-                ladosMaximos.push(pair<int, Arista *>(ben,*itv));
+                
+                // Si ya fui y vine por el mismo camino no puedo volver a tomarlo.
+                // Si fui de ida no puedo volver de ida, si fui de vuelta no puedo
+                // volver a ir de vuelta por ese camino.
+                if ((*itv)->v1 == vertice && (*itv)->ida != 1){
+		  // Va de ida
+		  ladosMaximos.push(pair<int, Arista *>(ben,*itv));
+		} else if ((*itv)->v2 == vertice && (*itv)->vuelta != 1){
+		  // Va de vuelta
+		  ladosMaximos.push(pair<int, Arista *>(ben,*itv));
+		} else if((*itv)->ida == 1 && (*itv)->vuelta == 1){
+		}
             }
         }
         
         acumulado += ladosMaximos.top().first;
         // Contar visita para tal lado
         ladosMaximos.top().second->t += 1;
-
+	
+	
         cout << "Proximo: ";
         if (ladosMaximos.top().second->v2 == vertice ) {
             cout << "(" << ladosMaximos.top().second->v1 << "<--" 
                       << ladosMaximos.top().second->v2 << ")" << endl;
             vertice = ladosMaximos.top().second->v1;
-        } else if (ladosMaximos.top().second->v1 == vertice) {
+	    ladosMaximos.top().second->vuelta = 1;
+	} else if (ladosMaximos.top().second->v1 == vertice) {
             cout << "(" << ladosMaximos.top().second->v1 << "-->" 
                       << ladosMaximos.top().second->v2 << ")" << endl;
             vertice = ladosMaximos.top().second->v2;
+	    ladosMaximos.top().second->ida = 1;
         }
 
         camino.push_back(vertice);

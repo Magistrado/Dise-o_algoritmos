@@ -1,0 +1,424 @@
+Objetivo=1
+Lados Requeridos: 17
+Lados No Requeridos: 27
+
+Vertice:1 acumulado: 0
+Proximo: (1-->2)
+Cola de prioridades: 
+(ben=6, (1-->2),#:1) Ida: 1 Vuelta: 0
+(ben=-7, (1-->19),#:0) Ida: 0 Vuelta: 0
+
+Vertice:2 acumulado: 6
+Proximo: (2-->4)
+Cola de prioridades: 
+(ben=5, (2-->4),#:1) Ida: 1 Vuelta: 0
+(ben=0, (2-->3),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (1-->2),#:1) Ida: 1 Vuelta: 0
+
+Vertice:4 acumulado: 11
+Proximo: (3<--4)
+Cola de prioridades: 
+(ben=8, (3-->4),#:1) Ida: 0 Vuelta: 1
+(ben=-2, (4-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (4-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (2-->4),#:1) Ida: 1 Vuelta: 0
+(ben=-8, (4-->19),#:0) Ida: 0 Vuelta: 0
+
+Vertice:3 acumulado: 19
+Proximo: (2<--3)
+Cola de prioridades: 
+(ben=0, (2-->3),#:1) Ida: 0 Vuelta: 1
+(ben=-1, (3-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-1, (3-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (3-->5),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (3-->6),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (3-->4),#:1) Ida: 0 Vuelta: 1
+
+Vertice:2 acumulado: 19
+Proximo: (2-->3)
+Cola de prioridades: 
+(ben=-1, (2-->3),#:2) Ida: 1 Vuelta: 1
+(ben=-3, (1-->2),#:1) Ida: 1 Vuelta: 0
+
+Vertice:3 acumulado: 18
+Proximo: (3-->14)
+Cola de prioridades: 
+(ben=-1, (3-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-1, (3-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (3-->6),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (3-->5),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (3-->4),#:1) Ida: 0 Vuelta: 1
+
+Vertice:14 acumulado: 17
+Proximo: (14-->15)
+Cola de prioridades: 
+(ben=7, (14-->15),#:1) Ida: 1 Vuelta: 0
+(ben=4, (13-->14),#:0) Ida: 0 Vuelta: 0
+(ben=2, (14-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (14-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (14-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (4-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (6-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (3-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (5-->14),#:0) Ida: 0 Vuelta: 0
+
+Vertice:15 acumulado: 24
+Proximo: (14<--15)
+Cola de prioridades: 
+(ben=-4, (14-->15),#:2) Ida: 1 Vuelta: 1
+(ben=-4, (13-->15),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (15-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-10, (9-->15),#:0) Ida: 0 Vuelta: 0
+
+Vertice:14 acumulado: 20
+Proximo: (13<--14)
+Cola de prioridades: 
+(ben=4, (13-->14),#:1) Ida: 0 Vuelta: 1
+(ben=2, (14-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (14-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (14-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (4-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (6-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (3-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (5-->14),#:0) Ida: 0 Vuelta: 0
+
+Vertice:13 acumulado: 24
+Proximo: (13-->15)
+Cola de prioridades: 
+(ben=-4, (13-->15),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (5-->13),#:0) Ida: 0 Vuelta: 0
+(ben=-6, (13-->14),#:1) Ida: 0 Vuelta: 1
+(ben=-6, (8-->13),#:0) Ida: 0 Vuelta: 0
+
+Vertice:15 acumulado: 20
+Proximo: (13<--15)
+Cola de prioridades: 
+(ben=-4, (13-->15),#:2) Ida: 1 Vuelta: 1
+(ben=-4, (15-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-10, (9-->15),#:0) Ida: 0 Vuelta: 0
+
+Vertice:13 acumulado: 16
+Proximo: (5<--13)
+Cola de prioridades: 
+(ben=-5, (5-->13),#:1) Ida: 0 Vuelta: 1
+(ben=-6, (13-->14),#:1) Ida: 0 Vuelta: 1
+(ben=-6, (8-->13),#:0) Ida: 0 Vuelta: 0
+
+Vertice:5 acumulado: 11
+Proximo: (5-->8)
+Cola de prioridades: 
+(ben=8, (5-->8),#:1) Ida: 1 Vuelta: 0
+(ben=1, (5-->6),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (3-->5),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (5-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (5-->13),#:1) Ida: 0 Vuelta: 1
+
+Vertice:8 acumulado: 19
+Proximo: (8-->9)
+Cola de prioridades: 
+(ben=2, (8-->9),#:1) Ida: 1 Vuelta: 0
+(ben=0, (7-->8),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (5-->8),#:1) Ida: 1 Vuelta: 0
+(ben=-6, (8-->13),#:0) Ida: 0 Vuelta: 0
+
+Vertice:9 acumulado: 21
+Proximo: (7<--9)
+Cola de prioridades: 
+(ben=1, (7-->9),#:1) Ida: 0 Vuelta: 1
+(ben=-3, (9-->10),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (9-->12),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (9-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (8-->9),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (9-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-10, (9-->15),#:0) Ida: 0 Vuelta: 0
+
+Vertice:7 acumulado: 22
+Proximo: (6<--7)
+Cola de prioridades: 
+(ben=8, (6-->7),#:1) Ida: 0 Vuelta: 1
+(ben=0, (7-->8),#:0) Ida: 0 Vuelta: 0
+(ben=-1, (7-->9),#:1) Ida: 0 Vuelta: 1
+
+Vertice:6 acumulado: 30
+Proximo: (5<--6)
+Cola de prioridades: 
+(ben=1, (5-->6),#:1) Ida: 0 Vuelta: 1
+(ben=-3, (3-->6),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (6-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-6, (6-->7),#:1) Ida: 0 Vuelta: 1
+
+Vertice:5 acumulado: 31
+Proximo: (5-->6)
+Cola de prioridades: 
+(ben=-2, (5-->6),#:2) Ida: 1 Vuelta: 1
+(ben=-3, (3-->5),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (5-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (5-->13),#:1) Ida: 0 Vuelta: 1
+
+Vertice:6 acumulado: 29
+Proximo: (3<--6)
+Cola de prioridades: 
+(ben=-3, (3-->6),#:1) Ida: 0 Vuelta: 1
+(ben=-4, (6-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-6, (6-->7),#:1) Ida: 0 Vuelta: 1
+
+Vertice:3 acumulado: 26
+Proximo: (3-->17)
+Cola de prioridades: 
+(ben=-1, (3-->17),#:1) Ida: 1 Vuelta: 0
+(ben=-3, (3-->5),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (3-->4),#:1) Ida: 0 Vuelta: 1
+(ben=-8, (3-->6),#:1) Ida: 0 Vuelta: 1
+
+Vertice:17 acumulado: 25
+Proximo: (17-->18)
+Cola de prioridades: 
+(ben=5, (17-->18),#:1) Ida: 1 Vuelta: 0
+(ben=-2, (4-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (14-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (12-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (3-->17),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (9-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-8, (11-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (17-->19),#:0) Ida: 0 Vuelta: 0
+
+Vertice:18 acumulado: 30
+Proximo: (18-->19)
+Cola de prioridades: 
+(ben=1, (18-->19),#:1) Ida: 1 Vuelta: 0
+(ben=-9, (17-->18),#:1) Ida: 1 Vuelta: 0
+
+Vertice:19 acumulado: 31
+Proximo: (18<--19)
+Cola de prioridades: 
+(ben=-2, (18-->19),#:2) Ida: 1 Vuelta: 1
+(ben=-2, (14-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-7, (1-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-8, (4-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (17-->19),#:0) Ida: 0 Vuelta: 0
+
+Vertice:18 acumulado: 29
+Proximo: (17<--18)
+Cola de prioridades: 
+(ben=-9, (17-->18),#:2) Ida: 1 Vuelta: 1
+
+Vertice:17 acumulado: 20
+Proximo: (4<--17)
+Cola de prioridades: 
+(ben=-2, (4-->17),#:1) Ida: 0 Vuelta: 1
+(ben=-2, (14-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (12-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (9-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (3-->17),#:1) Ida: 1 Vuelta: 0
+(ben=-8, (11-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (17-->19),#:0) Ida: 0 Vuelta: 0
+
+Vertice:4 acumulado: 18
+Proximo: (4-->14)
+Cola de prioridades: 
+(ben=-3, (4-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (2-->4),#:1) Ida: 1 Vuelta: 0
+(ben=-6, (4-->17),#:1) Ida: 0 Vuelta: 1
+(ben=-8, (4-->19),#:0) Ida: 0 Vuelta: 0
+
+Vertice:14 acumulado: 15
+Proximo: (14-->16)
+Cola de prioridades: 
+(ben=2, (14-->16),#:1) Ida: 1 Vuelta: 0
+(ben=-2, (14-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-2, (14-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-4, (6-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (5-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (3-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-6, (4-->14),#:1) Ida: 1 Vuelta: 0
+
+Vertice:16 acumulado: 17
+Proximo: (11<--16)
+Cola de prioridades: 
+(ben=-2, (11-->16),#:1) Ida: 0 Vuelta: 1
+(ben=-3, (14-->16),#:1) Ida: 1 Vuelta: 0
+(ben=-4, (15-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (9-->16),#:0) Ida: 0 Vuelta: 0
+(ben=-6, (12-->16),#:0) Ida: 0 Vuelta: 0
+
+Vertice:11 acumulado: 15
+Proximo: (10<--11)
+Cola de prioridades: 
+(ben=4, (10-->11),#:1) Ida: 0 Vuelta: 1
+(ben=-1, (11-->12),#:0) Ida: 0 Vuelta: 0
+(ben=-8, (11-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-14, (11-->16),#:1) Ida: 0 Vuelta: 1
+
+Vertice:10 acumulado: 19
+Proximo: (10-->12)
+Cola de prioridades: 
+(ben=1, (10-->12),#:1) Ida: 1 Vuelta: 0
+(ben=-2, (10-->11),#:1) Ida: 0 Vuelta: 1
+(ben=-3, (9-->10),#:0) Ida: 0 Vuelta: 0
+
+Vertice:12 acumulado: 20
+Proximo: (11<--12)
+Cola de prioridades: 
+(ben=-1, (11-->12),#:1) Ida: 0 Vuelta: 1
+(ben=-2, (12-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-3, (10-->12),#:1) Ida: 1 Vuelta: 0
+(ben=-4, (9-->12),#:0) Ida: 0 Vuelta: 0
+(ben=-6, (12-->16),#:0) Ida: 0 Vuelta: 0
+
+Vertice:11 acumulado: 19
+Proximo: (11-->12)
+Cola de prioridades: 
+(ben=-4, (11-->12),#:2) Ida: 1 Vuelta: 1
+(ben=-8, (11-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-14, (11-->16),#:1) Ida: 0 Vuelta: 1
+
+Vertice:12 acumulado: 15
+Proximo: (12-->17)
+Cola de prioridades: 
+(ben=-2, (12-->17),#:1) Ida: 1 Vuelta: 0
+(ben=-3, (10-->12),#:1) Ida: 1 Vuelta: 0
+(ben=-4, (9-->12),#:0) Ida: 0 Vuelta: 0
+(ben=-6, (12-->16),#:0) Ida: 0 Vuelta: 0
+
+Vertice:17 acumulado: 13
+Proximo: (14<--17)
+Cola de prioridades: 
+(ben=-2, (14-->17),#:1) Ida: 0 Vuelta: 1
+(ben=-5, (3-->17),#:1) Ida: 1 Vuelta: 0
+(ben=-5, (9-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-8, (11-->17),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (17-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-19, (12-->17),#:1) Ida: 1 Vuelta: 0
+
+Vertice:14 acumulado: 11
+Proximo: (14-->19)
+Cola de prioridades: 
+(ben=-2, (14-->19),#:1) Ida: 1 Vuelta: 0
+(ben=-4, (6-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (5-->14),#:0) Ida: 0 Vuelta: 0
+(ben=-5, (3-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-6, (4-->14),#:1) Ida: 1 Vuelta: 0
+(ben=-6, (14-->17),#:1) Ida: 0 Vuelta: 1
+
+Vertice:19 acumulado: 9
+Proximo: (1<--19)
+Cola de prioridades: 
+(ben=-7, (1-->19),#:1) Ida: 0 Vuelta: 1
+(ben=-8, (4-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-9, (17-->19),#:0) Ida: 0 Vuelta: 0
+(ben=-13, (14-->19),#:1) Ida: 1 Vuelta: 0
+
+Maximo beneficio: 2
+Camino: 1 2 4 3 2 3 14 15 14 13 15 13 5 8 9 7 6 5 6 3 17 18 19 18 17 4 14 16 11 10 12 11 12 17 14 19 1
+
+DEBUGGING
+Imprimir mi grafo
+1
+    v1: 1 v2: 2 Costo: 3 Beneficio: 9 #: 1 Ida: 1 Vuelta: 0
+    v1: 1 v2: 19 Costo: 7 Beneficio: 0 #: 1 Ida: 0 Vuelta: 1
+2
+    v1: 1 v2: 2 Costo: 3 Beneficio: 9 #: 1 Ida: 1 Vuelta: 0
+    v1: 2 v2: 3 Costo: 1 Beneficio: 1 #: 2 Ida: 1 Vuelta: 1
+    v1: 2 v2: 4 Costo: 5 Beneficio: 10 #: 1 Ida: 1 Vuelta: 0
+3
+    v1: 2 v2: 3 Costo: 1 Beneficio: 1 #: 2 Ida: 1 Vuelta: 1
+    v1: 3 v2: 4 Costo: 4 Beneficio: 12 #: 1 Ida: 0 Vuelta: 1
+    v1: 3 v2: 5 Costo: 7 Beneficio: 4 #: 0 Ida: 0 Vuelta: 0
+    v1: 3 v2: 6 Costo: 8 Beneficio: 5 #: 1 Ida: 0 Vuelta: 1
+    v1: 3 v2: 14 Costo: 5 Beneficio: 4 #: 1 Ida: 1 Vuelta: 0
+    v1: 3 v2: 17 Costo: 5 Beneficio: 4 #: 1 Ida: 1 Vuelta: 0
+4
+    v1: 2 v2: 4 Costo: 5 Beneficio: 10 #: 1 Ida: 1 Vuelta: 0
+    v1: 3 v2: 4 Costo: 4 Beneficio: 12 #: 1 Ida: 0 Vuelta: 1
+    v1: 4 v2: 14 Costo: 6 Beneficio: 3 #: 1 Ida: 1 Vuelta: 0
+    v1: 4 v2: 17 Costo: 6 Beneficio: 4 #: 1 Ida: 0 Vuelta: 1
+    v1: 4 v2: 19 Costo: 13 Beneficio: 5 #: 0 Ida: 0 Vuelta: 0
+5
+    v1: 5 v2: 6 Costo: 2 Beneficio: 3 #: 2 Ida: 1 Vuelta: 1
+    v1: 5 v2: 8 Costo: 4 Beneficio: 12 #: 1 Ida: 1 Vuelta: 0
+    v1: 3 v2: 5 Costo: 7 Beneficio: 4 #: 0 Ida: 0 Vuelta: 0
+    v1: 5 v2: 13 Costo: 9 Beneficio: 4 #: 1 Ida: 0 Vuelta: 1
+    v1: 5 v2: 14 Costo: 7 Beneficio: 2 #: 0 Ida: 0 Vuelta: 0
+6
+    v1: 5 v2: 6 Costo: 2 Beneficio: 3 #: 2 Ida: 1 Vuelta: 1
+    v1: 6 v2: 7 Costo: 6 Beneficio: 14 #: 1 Ida: 0 Vuelta: 1
+    v1: 3 v2: 6 Costo: 8 Beneficio: 5 #: 1 Ida: 0 Vuelta: 1
+    v1: 6 v2: 14 Costo: 8 Beneficio: 4 #: 0 Ida: 0 Vuelta: 0
+7
+    v1: 6 v2: 7 Costo: 6 Beneficio: 14 #: 1 Ida: 0 Vuelta: 1
+    v1: 7 v2: 8 Costo: 3 Beneficio: 3 #: 0 Ida: 0 Vuelta: 0
+    v1: 7 v2: 9 Costo: 1 Beneficio: 2 #: 1 Ida: 0 Vuelta: 1
+8
+    v1: 5 v2: 8 Costo: 4 Beneficio: 12 #: 1 Ida: 1 Vuelta: 0
+    v1: 7 v2: 8 Costo: 3 Beneficio: 3 #: 0 Ida: 0 Vuelta: 0
+    v1: 8 v2: 9 Costo: 5 Beneficio: 7 #: 1 Ida: 1 Vuelta: 0
+    v1: 8 v2: 13 Costo: 6 Beneficio: 0 #: 0 Ida: 0 Vuelta: 0
+9
+    v1: 7 v2: 9 Costo: 1 Beneficio: 2 #: 1 Ida: 0 Vuelta: 1
+    v1: 8 v2: 9 Costo: 5 Beneficio: 7 #: 1 Ida: 1 Vuelta: 0
+    v1: 9 v2: 10 Costo: 4 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+    v1: 9 v2: 12 Costo: 5 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+    v1: 9 v2: 15 Costo: 10 Beneficio: 0 #: 0 Ida: 0 Vuelta: 0
+    v1: 9 v2: 16 Costo: 10 Beneficio: 5 #: 0 Ida: 0 Vuelta: 0
+    v1: 9 v2: 17 Costo: 16 Beneficio: 11 #: 0 Ida: 0 Vuelta: 0
+10
+    v1: 10 v2: 11 Costo: 2 Beneficio: 6 #: 1 Ida: 0 Vuelta: 1
+    v1: 10 v2: 12 Costo: 3 Beneficio: 4 #: 1 Ida: 1 Vuelta: 0
+    v1: 9 v2: 10 Costo: 4 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+11
+    v1: 10 v2: 11 Costo: 2 Beneficio: 6 #: 1 Ida: 0 Vuelta: 1
+    v1: 11 v2: 12 Costo: 4 Beneficio: 3 #: 2 Ida: 1 Vuelta: 1
+    v1: 11 v2: 16 Costo: 14 Beneficio: 12 #: 1 Ida: 0 Vuelta: 1
+    v1: 11 v2: 17 Costo: 20 Beneficio: 12 #: 0 Ida: 0 Vuelta: 0
+12
+    v1: 10 v2: 12 Costo: 3 Beneficio: 4 #: 1 Ida: 1 Vuelta: 0
+    v1: 9 v2: 12 Costo: 5 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+    v1: 11 v2: 12 Costo: 4 Beneficio: 3 #: 2 Ida: 1 Vuelta: 1
+    v1: 12 v2: 16 Costo: 13 Beneficio: 7 #: 0 Ida: 0 Vuelta: 0
+    v1: 12 v2: 17 Costo: 19 Beneficio: 17 #: 1 Ida: 1 Vuelta: 0
+13
+    v1: 13 v2: 14 Costo: 6 Beneficio: 10 #: 1 Ida: 0 Vuelta: 1
+    v1: 5 v2: 13 Costo: 9 Beneficio: 4 #: 1 Ida: 0 Vuelta: 1
+    v1: 8 v2: 13 Costo: 6 Beneficio: 0 #: 0 Ida: 0 Vuelta: 0
+    v1: 13 v2: 15 Costo: 4 Beneficio: 0 #: 2 Ida: 1 Vuelta: 1
+14
+    v1: 13 v2: 14 Costo: 6 Beneficio: 10 #: 1 Ida: 0 Vuelta: 1
+    v1: 14 v2: 15 Costo: 4 Beneficio: 11 #: 2 Ida: 1 Vuelta: 1
+    v1: 14 v2: 16 Costo: 3 Beneficio: 5 #: 1 Ida: 1 Vuelta: 0
+    v1: 3 v2: 14 Costo: 5 Beneficio: 4 #: 1 Ida: 1 Vuelta: 0
+    v1: 4 v2: 14 Costo: 6 Beneficio: 3 #: 1 Ida: 1 Vuelta: 0
+    v1: 5 v2: 14 Costo: 7 Beneficio: 2 #: 0 Ida: 0 Vuelta: 0
+    v1: 6 v2: 14 Costo: 8 Beneficio: 4 #: 0 Ida: 0 Vuelta: 0
+    v1: 14 v2: 17 Costo: 6 Beneficio: 4 #: 1 Ida: 0 Vuelta: 1
+    v1: 14 v2: 19 Costo: 13 Beneficio: 11 #: 1 Ida: 1 Vuelta: 0
+15
+    v1: 14 v2: 15 Costo: 4 Beneficio: 11 #: 2 Ida: 1 Vuelta: 1
+    v1: 9 v2: 15 Costo: 10 Beneficio: 0 #: 0 Ida: 0 Vuelta: 0
+    v1: 13 v2: 15 Costo: 4 Beneficio: 0 #: 2 Ida: 1 Vuelta: 1
+    v1: 15 v2: 16 Costo: 5 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+16
+    v1: 14 v2: 16 Costo: 3 Beneficio: 5 #: 1 Ida: 1 Vuelta: 0
+    v1: 9 v2: 16 Costo: 10 Beneficio: 5 #: 0 Ida: 0 Vuelta: 0
+    v1: 11 v2: 16 Costo: 14 Beneficio: 12 #: 1 Ida: 0 Vuelta: 1
+    v1: 12 v2: 16 Costo: 13 Beneficio: 7 #: 0 Ida: 0 Vuelta: 0
+    v1: 15 v2: 16 Costo: 5 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+17
+    v1: 17 v2: 18 Costo: 9 Beneficio: 14 #: 2 Ida: 1 Vuelta: 1
+    v1: 3 v2: 17 Costo: 5 Beneficio: 4 #: 1 Ida: 1 Vuelta: 0
+    v1: 4 v2: 17 Costo: 6 Beneficio: 4 #: 1 Ida: 0 Vuelta: 1
+    v1: 9 v2: 17 Costo: 16 Beneficio: 11 #: 0 Ida: 0 Vuelta: 0
+    v1: 11 v2: 17 Costo: 20 Beneficio: 12 #: 0 Ida: 0 Vuelta: 0
+    v1: 12 v2: 17 Costo: 19 Beneficio: 17 #: 1 Ida: 1 Vuelta: 0
+    v1: 14 v2: 17 Costo: 6 Beneficio: 4 #: 1 Ida: 0 Vuelta: 1
+    v1: 17 v2: 19 Costo: 10 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+18
+    v1: 17 v2: 18 Costo: 9 Beneficio: 14 #: 2 Ida: 1 Vuelta: 1
+    v1: 18 v2: 19 Costo: 2 Beneficio: 3 #: 2 Ida: 1 Vuelta: 1
+19
+    v1: 18 v2: 19 Costo: 2 Beneficio: 3 #: 2 Ida: 1 Vuelta: 1
+    v1: 1 v2: 19 Costo: 7 Beneficio: 0 #: 1 Ida: 0 Vuelta: 1
+    v1: 4 v2: 19 Costo: 13 Beneficio: 5 #: 0 Ida: 0 Vuelta: 0
+    v1: 14 v2: 19 Costo: 13 Beneficio: 11 #: 1 Ida: 1 Vuelta: 0
+    v1: 17 v2: 19 Costo: 10 Beneficio: 1 #: 0 Ida: 0 Vuelta: 0
+
+Memoria liberada
