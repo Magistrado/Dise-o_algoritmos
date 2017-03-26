@@ -1,12 +1,9 @@
 /*
     Nombre: Edgar Valderrama
             Daniel Leones       09-10977
-    Fecha: 17/2/2017
-    Descripción: Resolución de PRPP usando un algoritmo greedy.
-
-    Ejecución: ./solver_prpp /camino/a/instancia 1
-    Colocar 1 como segundo arg dado que se requiere que retorne al mismo punto donde
-    parte. 
+    Fecha: 25/3/2017
+    Descripción: Resolución de PRPP usando un algoritmo bab. Estructuras y 
+    operaciones conexas del programa.
 */
 
 using namespace std;

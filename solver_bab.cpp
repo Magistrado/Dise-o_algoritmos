@@ -1,12 +1,10 @@
 /*
     Nombre: Edgar Valderrama
             Daniel Leones       09-10977
-    Fecha: 17/2/2017
+    Fecha: 25/3/2017
     Descripción: Resolución de PRPP usando un algoritmo basado en branch and bound.
 
-    Ejecución: ./solver_prpp /camino/a/instancia 1
-    Colocar 1 como segundo arg dado que se requiere que retorne al mismo punto donde
-    parte. 
+    Ejecución: ./solver_bab /camino/a/instancia 
 */
 #include <iostream>
 #include <algorithm>
@@ -22,8 +20,8 @@ bool produceBeneficio(vector<Arista *>ciclo) {
     int costoArista = 0;
 
     for (int i=0; i< static_cast<int>(ciclo.size());i++){
-        if (ciclo[i]->ida == 1 && ciclo[i]->vuelta == 1){
-            costoArista += (ciclo[i]->b) - 2 * (ciclo[i]->c);
+        if (ciclo[i]->t == 2){
+            costoArista += - 2 * (ciclo[i]->c);
         } else {
             costoArista += (ciclo[i]->b) - (ciclo[i]->c);
         }
@@ -35,16 +33,19 @@ bool produceBeneficio(vector<Arista *>ciclo) {
 int calcularBeneficio(vector<Arista *> &la) {
     int acum = 0;
     for (auto i = la.begin(); i != la.end(); ++i) {   
-        acum += (*i)->b - (*i)->c;
+        acum += (*i)->b - ((*i)->c*(*i)->t);
     }
     return acum;
 }
 
-bool cicloNeg(Arista * e, vector<Arista *> solParcial){
+bool cicloNeg(int v, Arista * e, vector<Arista *> &solParcialArista, vector<int> &solParcial){
     vector<Arista *> ciclo;
-    for (int j=1;j < static_cast<int>(solParcial.size());j++){
-        ciclo.push_back(solParcial[j]);
-        if(e->v2 == solParcial[j]->v2){
+    int vProx;
+    if (v == e->v1) vProx = e->v2; else vProx = e->v1;
+
+    for (int j= static_cast<int>(solParcial.size()) - 1 ; j >= 0; j--){
+        ciclo.push_back(solParcialArista[j]);
+        if(vProx == solParcial[j]) {
             if (!produceBeneficio(ciclo)){
                 return true;
             }
@@ -75,30 +76,30 @@ bool presenteSolParcial(Arista * e, vector<Arista *> solParcial) {
         }
     }
     return true;
-
 }
 
-/*bool repiteCiclo(int nodoProx, vector<Arista*> ladosMaximos, Arista* e, vector<int> solParcial) {
+bool repiteCiclo(int v, Arista* e, vector<Arista*> &solParcialArista, 
+                 vector<int> &solParcialNodos) {
     Arista * e1;
-    bool cent = false;
-    for (auto i = solParcial.begin(); i != solParcial.end(); ++i) {
-        if (nodoProx == (*i)->v1) || (nodoProx == (*i)->v2))
-        {
-            e1 = *i;
-            break;
-        }
 
-    }
+    int vProx;
+    if (v == e->v1) vProx = e->v2; else vProx = e->v1;
 
-    for (auto i = ladosMaximos.begin(); i != ladosMaximos.end(); ++i) {
-        if (((e->v1 == (*i)->v1) && (e->v2 == (*i)->v2))
-            || ((e->v1 == (*i)->v2) && (e->v2 == (*i)->v1)))
-        {
-            e1 = *i;
-            break;
+    for (int j= static_cast<int>(solParcialNodos.size()) - 1 ; j >= 0; j--) {
+        if(vProx == solParcialNodos[j]) {
+            e1 = solParcialArista[j];
+            cout << "Elegido\tv1: " << e1->v1 << " v2: " << e1->v2 << " Costo: " 
+                    << e1->c << " Beneficio: "
+                    << e1->b << " #: " << e1->t << " Ida: " << e1->ida
+                    << " Vuelta: " << e1->vuelta << endl;
+            if ((e->b - e->c) < (e1->b - e1->c))
+                return false;
+            else
+                return true;
         }
     }
-}*/
+    return false;
+}
 
 bool cumpleAcotamiento(Grafo &g, Arista* e, vector<Arista*> &solParcial, 
                         vector<Arista * > &mejorSol) {
@@ -120,6 +121,7 @@ void solver_bab(Grafo &g, vector<Arista*> &solInicial,
     vector<int> solParcial;
     // Camino de la solucion hallada del algoritmo
     vector<Arista*> solParcialArista;
+    vector<int> solParcialNodos;
 
     vector<Arista*> mejorSol = solInicial;
     Arista* ultimoLado;
@@ -142,17 +144,19 @@ void solver_bab(Grafo &g, vector<Arista*> &solInicial,
         {
             if ( 
                 (!presenteSolParcial(*e,solParcialArista)) 
-                /*&& (!cicloNeg(*e,solParcial))
-                && (!repiteCiclo(ladosMaximos,*e,solParcial)) */
+                && (!cicloNeg(v,*e,solParcialArista,solParcial))
+                && (!repiteCiclo(v,*e,solParcialArista,solParcial)) 
                 && cumpleAcotamiento(g,*e,solParcialArista,mejorSol)
                 ) 
             {
                 (*e)->t += 1;
                 g.maxBen -= max(0, (*e)->b - (*e)->c);
-                if ((*e)->v1 == v)
+                if ((*e)->v1 == v) {
                     solParcial.push_back((*e)->v2);
-                else
+                }
+                else {
                     solParcial.push_back((*e)->v1);
+                }
 
                 solParcialArista.push_back(*e);
                 break;
@@ -169,9 +173,34 @@ void solver_bab(Grafo &g, vector<Arista*> &solInicial,
 int main(int argc, char const *argv[])
 {
 
-    Grafo instancia;
-    instancia.cargarEjem(argv[1]);
+    //Grafo instancia;
+    //instancia.cargarEjem(argv[1]);
     //instancia.cargarInstancias(argv[1]);
-    instancia.imprimirGrafo();
+    //instancia.imprimirGrafo();
+
+    Arista* lado = new Arista {6,3,2,4,0,0,0};
+    vector<int> nodoPrueba { 1, 2, 3, 4, 5, 6};
+    vector<Arista*> aristasPrueba 
+        {
+            new Arista { 1,2,2,4,0,0,0 },
+            new Arista { 2,3,2,4,0,0,0 },
+            new Arista { 3,4,1,4,0,0,0 },
+            new Arista { 4,5,2,4,0,0,0 },
+            new Arista { 5,6,2,4,0,0,0 }
+        };
+
+    cout << "Resultado: " << 
+        repiteCiclo(6,lado,aristasPrueba,nodoPrueba ) << endl;
+
+    delete lado;
+    for (vector<Arista*>::iterator i = aristasPrueba.begin(); 
+                    i != aristasPrueba.end(); ++i) 
+    {
+        if (*i == 0){
+            delete *i;
+            *i = 0;
+        }
+    }
+
     return 0;
 }
