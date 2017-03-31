@@ -1,5 +1,5 @@
 /*
-    Nombre: Edgar Valderrama
+    Nombre: Edgar Valderrama    09-10870
             Daniel Leones       09-10977
     Fecha: 25/3/2017
     Descripción: Resolución de PRPP usando un algoritmo bab. Estructuras y 
@@ -11,7 +11,7 @@ using namespace std;
 /*
     Funciones auxiliares para dividir lineas 
 */
-void split(const string &s, char delim, vector<string> &elems) {
+void split_aux(const string &s, char delim, vector<string> &elems) {
     stringstream ss;
     ss.str(s);
     string item;
@@ -22,7 +22,7 @@ void split(const string &s, char delim, vector<string> &elems) {
 
 vector<string> split(const string &s, char delim) {
     vector<string> elems;
-    split(s, delim, elems);
+    split_aux(s, delim, elems);
     return elems;
 }
 

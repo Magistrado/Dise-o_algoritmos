@@ -1,16 +1,17 @@
 /*
-    Nombre: Edgar Valderrama
+    Nombre: Edgar Valderrama    09-10870
             Daniel Leones       09-10977
     Fecha: 17/2/2017
     Descripción: Resolución de PRPP usando un algoritmo greedy.
 
-    Ejecución: ./solver_prpp /camino/a/instancia 1
+    Ejecución: ./solver_greedy_prpp /camino/a/instancia 1
     Colocar 1 como segundo arg dado que se requiere que retorne al mismo punto donde
     parte. 
 */
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <sstream>
 #include <map>
@@ -20,40 +21,10 @@
 using namespace std;
 
 /*
-    Funciones auxiliares para dividir lineas 
-*/
-void split(const string &s, char delim, vector<string> &elems) {
-    stringstream ss;
-    ss.str(s);
-    string item;
-    while (getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
-}
-
-vector<string> split(const string &s, char delim) {
-    vector<string> elems;
-    split(s, delim, elems);
-    return elems;
-}
-
-/*
-    Estructuras para las aristas
-*/
-struct Arista {
-    int v1;
-    int v2;
-    int c;
-    int b;
-    int t;
-};
-
-
-/*
     Función objeto para ordenamiento en la cola de prioridades usada por el algoritmo greedy
 */
 
-class Comparar
+class CompararGreddy
 {
 public:
     bool operator()(pair<int, Arista * > a, pair<int, Arista *> b)
@@ -61,110 +32,6 @@ public:
         return a.first < b.first;
     }
 };
-
-
-/*
-    Funciones generales de impresión
-*/
-
-void imprimirVector(vector<Arista*> &adya) {
-    for (vector<Arista*>::iterator i = adya.begin(); i != adya.end(); ++i)
-    {
-        cout << "    v1: " << (*i)->v1 << " v2: " << (*i)->v2 << " Costo: " 
-            << (*i)->c << " Beneficio: "
-            << (*i)->b << " #: " << (*i)->t<< endl;
-    }
-}
-
-void imprimirCamino(vector<int> &camino) {
-    cout << "Camino:";
-    for (vector<int>::iterator i = camino.begin(); i != camino.end(); ++i)
-    {
-        cout << " " << *i;
-    }
-    cout << endl;
-}
-
-void imprimirParCola(const pair<int, Arista *> &it) {
-    cout << "(ben=" << it.first << ", (" << (it.second)->v1 
-        << "-->" << (it.second)->v2 << ")" << ",#:" 
-        << (it.second)->t << ")\n";
-}
-
-/*
-    Borrar Aristas en los vectores de lo grafos
-*/
-
-void borrarAristas(vector<Arista*> &v) {
-    for (vector<Arista*>::iterator i = v.begin(); i != v.end(); ++i) {
-        if (*i == nullptr){
-            delete *i;
-            *i = nullptr;
-        }
-    }
-}
-
-/*
-    Cargador de instancias para el ejemplo del enunciado
-*/
-
-void cargarEjem(string camino, map<int, vector< Arista* > > &grafo) {
-    ifstream in(camino);
-    int v1, v2, c, b;
-    Arista* lado;
-    while (in >> v1 >> v2 >> c >> b) {
-        lado = new Arista { v1, v2, c, b, 0 };
-        grafo[v1].push_back(lado);
-        grafo[v2].push_back(lado);
-    }
-    in.close();
-}
-
-
-void cargarInstancias(string camino, map<int, vector< Arista* > > &grafo) {
-
-    ifstream in(camino);
-    string entrada, entrada2;
-    vector<string> entradaDividida;
-    Arista* lado;
-    int nroLados, v1, v2, c, b;
-
-    getline(in, entrada);
-    getline(in, entrada);   
-    entradaDividida = split(entrada, ' ');
-    if ( ! (stringstream(entradaDividida.back()) 
-        >> nroLados) ) nroLados = 0;
-
-    cout << "Lados Requeridos: " << nroLados << endl;
-    for (int i = 0; i < nroLados; ++i)
-    {
-        in >> v1 >> v2 >> c >> b;
-        //cout << v1 << " " << v2 << endl;
-        lado = new Arista { v1, v2, c, b, 0 };
-        grafo[v1].push_back(lado);
-        grafo[v2].push_back(lado);
-    }
-
-    //in.clear();
-    // Se usa para hacer avanzar el cursor sino no lee
-    getline(in, entrada);
-    getline(in, entrada);
-    entradaDividida = split(entrada, ' ');
-
-    if ( ! (stringstream(entradaDividida.back()) 
-        >> nroLados) ) nroLados = 0;
-
-    cout << "Lados No Requeridos: " << nroLados << endl;
-    for (int i = 0; i < nroLados; ++i)
-    {
-        in >> v1 >> v2 >> c >> b;
-        //cout << v1 << " " << v2 << endl;
-        lado = new Arista { v1, v2, c, b, 0 };
-        grafo[v1].push_back(lado);
-        grafo[v2].push_back(lado);
-    }
-    in.close();
-}
 
 /*
     Algoritmo greedy a probar. Se apoya en una cola de prioridades para
@@ -174,20 +41,19 @@ void cargarInstancias(string camino, map<int, vector< Arista* > > &grafo) {
     Retorna: el mayor beneficio alcanzado al regresar a 1.
 */
 
-int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
-                        vector<int> &camino) 
+int solver_greedy(map<int, vector< Arista* > > &grafo, int verticeObj, vector<Arista *>&caminoAristas) 
 {
-
     int acumulado = 0, vertice = 1, ben = 0;
+    int aux;
     priority_queue< pair<int,Arista * >, // (beneficio calculado , _) 
-        vector< pair<int, Arista * > >, Comparar > ladosMaximos;
+        vector< pair<int, Arista * > >, CompararGreddy > ladosMaximos;
     //Iteradores 
     vector< Arista* >::iterator itv;
-
-    camino.push_back(vertice);
+    Arista *arista;
+       
     do
     {   
-        cout << "\nVertice:"  << vertice << " acumulado: " << acumulado << endl;
+        //cout << "\nVertice:"  << vertice << " acumulado: " << acumulado << endl;
         for ( itv = grafo[vertice].begin(); itv != grafo[vertice].end(); ++itv)
         {   
             {
@@ -196,30 +62,59 @@ int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
                 } else {
                     ben = -((*itv)->c*(*itv)->t);
                 }
-                ladosMaximos.push(pair<int, Arista *>(ben,*itv));
+                
+                // Si ya fui y vine por el mismo camino no puedo volver a tomarlo.
+                // Si fui de ida no puedo volver de ida, si fui de vuelta no puedo
+                // volver a ir de vuelta por ese camino.
+                if ((*itv)->v1 == vertice && (*itv)->ida != 1){
+		  // Va de ida
+		  ladosMaximos.push(pair<int, Arista *>(ben,*itv));
+		} else if ((*itv)->v2 == vertice && (*itv)->vuelta != 1){
+		  // Va de vuelta
+		  ladosMaximos.push(pair<int, Arista *>(ben,*itv));
+		} else if((*itv)->ida == 1 && (*itv)->vuelta == 1){
+		}
             }
         }
         
         acumulado += ladosMaximos.top().first;
         // Contar visita para tal lado
         ladosMaximos.top().second->t += 1;
-
-        cout << "Proximo: ";
+	
+	
+        //cout << "Proximo: ";
         if (ladosMaximos.top().second->v2 == vertice ) {
-            cout << "(" << ladosMaximos.top().second->v1 << "<--" 
-                      << ladosMaximos.top().second->v2 << ")" << endl;
-            vertice = ladosMaximos.top().second->v1;
-        } else if (ladosMaximos.top().second->v1 == vertice) {
-            cout << "(" << ladosMaximos.top().second->v1 << "-->" 
-                      << ladosMaximos.top().second->v2 << ")" << endl;
-            vertice = ladosMaximos.top().second->v2;
+                //cout << "(" << ladosMaximos.top().second->v1 << "<--" 
+                //          << ladosMaximos.top().second->v2 << ")" << endl;
+                vertice = ladosMaximos.top().second->v1;
+    	    ladosMaximos.top().second->vuelta = 1;
+            arista = new Arista();
+            arista->v1 = ladosMaximos.top().second->v2;
+            arista->v2 = ladosMaximos.top().second->v1;
+            arista->c = ladosMaximos.top().second->c;
+            arista->b = ladosMaximos.top().second->b;
+            arista->t = ladosMaximos.top().second->t;
+            arista->ida = ladosMaximos.top().second->ida;
+            arista->vuelta = ladosMaximos.top().second->vuelta;
+    	} else if (ladosMaximos.top().second->v1 == vertice) {
+                //cout << "(" << ladosMaximos.top().second->v1 << "-->" 
+                //          << ladosMaximos.top().second->v2 << ")" << endl;
+                vertice = ladosMaximos.top().second->v2;
+    	    ladosMaximos.top().second->ida = 1;
+            arista = new Arista();
+            arista->v1 = ladosMaximos.top().second->v1;
+            arista->v2 = ladosMaximos.top().second->v2;
+            arista->c = ladosMaximos.top().second->c;
+            arista->b = ladosMaximos.top().second->b;
+            arista->t = ladosMaximos.top().second->t;
+            arista->ida = ladosMaximos.top().second->ida;
+            arista->vuelta = ladosMaximos.top().second->vuelta;
         }
 
-        camino.push_back(vertice);
+        caminoAristas.push_back(arista);
 
-        cout << "Cola de prioridades: " << endl;
         while (!ladosMaximos.empty()) {
-            imprimirParCola(ladosMaximos.top());
+            //imprimirParCola(ladosMaximos.top());
             ladosMaximos.pop();
         }
 
@@ -228,12 +123,49 @@ int solver(map<int, vector< Arista* > > &grafo, int verticeObj,
     return acumulado;
 }
 
+bool produceBeneficio_greedy(vector<Arista *>ciclo){
+    int i=0;
+    int costoArista = 0;
+
+    for (int i=0; i<ciclo.size();i++){
+
+        if (ciclo[i]->ida == 1 && ciclo[i]->vuelta == 1){
+            costoArista += (ciclo[i]->b) - 2 * (ciclo[i]->c);
+        } else {
+            costoArista += (ciclo[i]->b) - (ciclo[i]->c);
+        }
+    }
+    return costoArista > 0;
+}
+
+void eliminarCiclosNeg(vector<Arista *> &camino){
+    int i = 0;
+    int j = 0;
+    Arista *eNext;
+    Arista *eNextNext;
+
+    vector<Arista *> ciclo;
+
+    for (int i=1;i<camino.size();i++){
+        eNext = camino[i];
+        ciclo.clear();
+        for (int j=i+1;j<camino.size();j++){
+            ciclo.push_back(camino[j]);
+            if(eNext->v2 == camino[j]->v2){
+                if (!produceBeneficio_greedy(ciclo)){
+                    camino.erase(camino.begin()+(i+1), camino.begin()+j);
+                    break;
+                }
+            }
+        }
+    }
+}
 
 /*
     Programa principal.
 
 */
-
+/*
 int main(int argc, const char *argv[]) {
 
     //ofstream out("resultados.txt"); 
@@ -241,33 +173,28 @@ int main(int argc, const char *argv[]) {
     map<int, vector< Arista* > > grafo;
     map<int, vector< Arista* > >::iterator it;
     vector<int> camino;
+    vector<Arista *> caminoAristas;
 
     if ( ! (stringstream(argv[2]) >> verticeObj) ) verticeObj = 0;
 
-    cout << "Objetivo=" << verticeObj << endl;
     //cargarEjem(argv[1],grafo);
     cargarInstancias(argv[1],grafo);
+
     // Prueba del algoritmo greedy
-    cout << "\nMaximo beneficio: " << solver(grafo,verticeObj,camino) << endl;
-
+    solver_greedy(grafo,verticeObj,camino,caminoAristas);
     // Resultado del camino
-    imprimirCamino(camino);
+    //imprimirCamino(camino);
 
-    cout << "\nDEBUGGING\nImprimir mi grafo" << endl;
-    for (it = grafo.begin(); it != grafo.end(); ++it) {
-        cout << it->first << '\n';
-        imprimirVector(it->second);
-    }
+    // Mejorando la solucion
+    eliminarCiclosNeg(caminoAristas);
+    imprimirSolucion(caminoAristas);
 
     // Liberar memoria
     for (it = grafo.begin(); it != grafo.end(); ++it) {
         borrarAristas(it->second);
     }
-    cout << "\nMemoria liberada" << endl;
-
-
-
     
     //out.close();
     return 0;
 }
+*/

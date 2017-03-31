@@ -1,9 +1,8 @@
 /*
-    Nombre: Edgar Valderrama
+    Nombre: Edgar Valderrama    09-10870
             Daniel Leones       09-10977
     Fecha: 25/3/2017
     Descripción: Resolución de PRPP usando un algoritmo basado en branch and bound.
-
     Ejecución: ./solver_bab /camino/a/instancia 
 */
 #include <iostream>
@@ -13,6 +12,7 @@
 #include <map>
 #include <sstream>
 #include "auxiliares.cpp"
+#include "solver_prpp.cpp"
 
 using namespace std;
 
@@ -172,35 +172,50 @@ void solver_bab(Grafo &g, vector<Arista*> &solInicial,
 
 int main(int argc, char const *argv[])
 {
+    cout << "RoadHouse";
 
-    //Grafo instancia;
-    //instancia.cargarEjem(argv[1]);
-    //instancia.cargarInstancias(argv[1]);
-    //instancia.imprimirGrafo();
+    Grafo instancia;
+    vector<Arista *> caminoAristasGreedy;
+    vector<Arista *> caminoOptimo;
+    int greedy=0;
 
-    Arista* lado = new Arista {6,3,2,4,0,0,0};
-    vector<int> nodoPrueba { 1, 2, 3, 4, 5, 6};
-    vector<Arista*> aristasPrueba 
-        {
-            new Arista { 1,2,2,4,0,0,0 },
-            new Arista { 2,3,2,4,0,0,0 },
-            new Arista { 3,4,1,4,0,0,0 },
-            new Arista { 4,5,2,4,0,0,0 },
-            new Arista { 5,6,2,4,0,0,0 }
-        };
+    instancia.cargarEjem(argv[1]);
+    instancia.cargarInstancias(argv[1]);
+    // instancia.imprimirGrafo();
+    
+    greedy = solver_greedy(instancia.graf, 1, caminoAristasGreedy);
 
-    cout << "Resultado: " << 
-        repiteCiclo(6,lado,aristasPrueba,nodoPrueba ) << endl;
-
-    delete lado;
-    for (vector<Arista*>::iterator i = aristasPrueba.begin(); 
-                    i != aristasPrueba.end(); ++i) 
-    {
-        if (*i == 0){
-            delete *i;
-            *i = 0;
-        }
+    for (auto a=caminoAristasGreedy.begin(); a!=caminoAristasGreedy.end(); ++a){
+        cout << "Camino " << (*a)->v1 << " - " << (*a)->v2 << endl;
     }
+
+    solver_bab(instancia, caminoAristasGreedy, greedy, caminoOptimo);
+    
+    instancia.imprimirGrafo();
+
+    // Arista* lado = new Arista {6,3,2,4,0,0,0};
+    // vector<int> nodoPrueba { 1, 2, 3, 4, 5, 6};
+    // vector<Arista*> aristasPrueba 
+    // {
+    //     new Arista { 1,2,2,4,0,0,0 },
+    //     new Arista { 2,3,2,4,0,0,0 },
+    //     new Arista { 3,4,1,4,0,0,0 },
+    //     new Arista { 4,5,2,4,0,0,0 },
+    //     new Arista { 5,6,2,4,0,0,0 }
+    // };
+
+    // cout << "Resultado: " << 
+    //     repiteCiclo(6,lado,aristasPrueba,nodoPrueba ) << endl;
+
+    // delete lado;
+    // for (vector<Arista*>::iterator i = aristasPrueba.begin(); 
+    //                 i != aristasPrueba.end(); ++i) 
+    // {
+    //     if (*i == 0){
+    //         delete *i;
+    //         *i = 0;
+    //     }
+    // }
 
     return 0;
 }
