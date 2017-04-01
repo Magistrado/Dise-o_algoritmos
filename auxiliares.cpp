@@ -93,6 +93,7 @@ public:
             graf[v1].push_back(lado);
             graf[v2].push_back(lado);
         }
+        cout << "Beneficio aristas R y Q: " << maxBen << endl;
 
         //in.clear();
         // Se usa para hacer avanzar el cursor sino no lee
@@ -108,11 +109,14 @@ public:
             in >> v1 >> v2 >> c >> b;
             //cout << v1 << " " << v2 << endl;
             lado = new Arista { v1, v2, c, b, 0, 0, 0};
-            maxBen += b - c;
+            //benP += b - c;
+            //maxBen += b - c;
             graf[v1].push_back(lado);
             graf[v2].push_back(lado);
         }
         in.close();
+        //cout << "Beneficio P: " << benP << endl;
+        cout << "Maximo beneficio posible: " << maxBen << endl;
     }
 
 

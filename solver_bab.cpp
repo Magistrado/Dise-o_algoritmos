@@ -16,6 +16,12 @@
 
 using namespace std;
 
+
+int beneficio_maximo = 0;
+vector<Arista*> mejorSol;
+vector<Arista*> solParcial;
+Grafo instancia;
+
 bool produceBeneficio(vector<Arista *>ciclo) {
     int costoArista = 0;
 
@@ -30,27 +36,29 @@ bool produceBeneficio(vector<Arista *>ciclo) {
 }
 
 
-int calcularBeneficio(vector<Arista *> &la) {
+int calcularBeneficio(const vector<Arista *> &la) {
     int acum = 0;
-    for (auto i = la.begin(); i != la.end(); ++i) {   
-        acum += (*i)->b - ((*i)->c*(*i)->t);
+    for (auto i = la.cbegin(); i != la.cend(); ++i) {
+        if ((*i)->t == 1)
+            acum += (*i)->b - ((*i)->c);
+        else
+            acum += - ((*i)->c)*((*i)->t);
     }
     return acum;
 }
 
-bool cicloNeg(int v, Arista *e, vector<Arista *> &solParcialArista, vector<int> &solParcial){
+bool cicloNeg(int v, Arista *e){
     vector<Arista *> ciclo;
     int vProx;
 
-    if (v == e->v1){
-        vProx = e->v2;
-    } else{
-        vProx = e->v1;
-    }
+    // Vertice posiblemente que se repita en solParcial
+    if (v == e->v1) vProx = e->v2; else vProx = e->v1;
 
-    for (int j= static_cast<int>(solParcial.size()) - 1 ; j >= 0; j--){
-        ciclo.push_back(solParcialArista[j]);
-        if(vProx == solParcial[j]) {
+    for (auto j = solParcial.rbegin(); j != solParcial.rend(); ++j)
+    {
+        ciclo.push_back(*j);
+        if (v == (*j)->v1) v = (*j)->v2; else v = (*j)->v1;
+        if(vProx == v) {
             if (!produceBeneficio(ciclo)){
                 return true;
             }
@@ -59,7 +67,7 @@ bool cicloNeg(int v, Arista *e, vector<Arista *> &solParcialArista, vector<int> 
     return false;
 }
 
-bool presenteSolParcial(Arista * e, vector<Arista *> solParcial) {
+bool presenteSolParcial(Arista * e) {
     bool presente = false;
     int cont_e = 0;
     for (auto i = solParcial.begin(); i != solParcial.end(); ++i) {
@@ -83,20 +91,20 @@ bool presenteSolParcial(Arista * e, vector<Arista *> solParcial) {
     return true;
 }
 
-bool repiteCiclo(int v, Arista* e, vector<Arista*> &solParcialArista, 
-                 vector<int> &solParcialNodos) {
+bool repiteCiclo(int v, Arista* e) {
     Arista * e1;
-
     int vProx;
     if (v == e->v1) vProx = e->v2; else vProx = e->v1;
 
-    for (int j= static_cast<int>(solParcialNodos.size()) - 1 ; j >= 0; j--) {
-        if(vProx == solParcialNodos[j]) {
-            e1 = solParcialArista[j];
-            cout << "Elegido\tv1: " << e1->v1 << " v2: " << e1->v2 << " Costo: " 
+    for (auto j = solParcial.rbegin(); j != solParcial.rend(); ++j)
+    {
+        if (v == (*j)->v1) v = (*j)->v2; else v = (*j)->v1;
+        if(vProx == v) {
+            e1 = *j;
+            /*cout << "Elegido\tv1: " << e1->v1 << " v2: " << e1->v2 << " Costo: " 
                     << e1->c << " Beneficio: "
                     << e1->b << " #: " << e1->t << " Ida: " << e1->ida
-                    << " Vuelta: " << e1->vuelta << endl;
+                    << " Vuelta: " << e1->vuelta << endl;*/
             if ((e->b - e->c) < (e1->b - e1->c))
                 return false;
             else
@@ -106,102 +114,95 @@ bool repiteCiclo(int v, Arista* e, vector<Arista*> &solParcialArista,
     return false;
 }
 
-bool cumpleAcotamiento(Grafo &g, Arista* e, vector<Arista*> &solParcial, 
-                        vector<Arista * > &mejorSol) {
-    int beneficio_e = e->b - e->t;
-    int maxBeneficio = g.maxBen - max(0,beneficio_e) 
+bool cumpleAcotamiento(Arista* e) {
+    int beneficio_e = e->b - e->c;
+    int maxBeneficio = beneficio_maximo - max(0,beneficio_e) 
         + calcularBeneficio(solParcial) + beneficio_e;
+    /*cout << "beneficio_e: " << beneficio_e << " maxBeneficio: " 
+        << maxBeneficio << " mejorSol " << calcularBeneficio(mejorSol) << endl;*/
     if (maxBeneficio <= calcularBeneficio(mejorSol)) 
         return false;
     else
         return true;
 }
 
-void solver_bab(Grafo &g, vector<Arista*> &solInicial, 
-                int benSolInicial, vector<Arista *> &solOpt) 
+int verticeMasExterno() 
+{
+    int vActual = 1;
+    for (auto i = solParcial.begin(); i != solParcial.end(); ++i)
+    {
+        if (vActual == (*i)->v1) vActual = (*i)->v2; else vActual = (*i)->v1;
+    }
+    return vActual;
+}
+
+void buscarProfun() 
 {
     // Lista de sucesores 
     vector<Arista*> ladosMaximos;
-    // Pila para control del orden de éxpansión
-    vector<int> solParcial;
-    // Camino de la solucion hallada del algoritmo
-    vector<Arista*> solParcialArista;
-    vector<int> solParcialNodos;
+    int v = verticeMasExterno();
+    cout << "\n\nNodo V " << v << endl;
 
-    vector<Arista*> mejorSol = solInicial;
-    Arista* ultimoLado;
-    int v;
-    // Se usa como deposito 0 en lugar de 'd'
-    solParcial.push_back(1);
-
-    while (!solParcial.empty()) 
+    if (v == 0) 
     {
-        cout << "In While " << endl;
-        v = solParcial.back();
-
-        cout << "Nodo V " << v << endl;
-        if (v == 1) 
+        cout << "Oviamente entra aca " << calcularBeneficio(solParcial) << "  " << calcularBeneficio(mejorSol) << endl;
+        if (calcularBeneficio(solParcial) > calcularBeneficio(mejorSol))
         {
-            cout << "Oviamente entra aca " << calcularBeneficio(solParcialArista) << "  " << calcularBeneficio(mejorSol) << endl;
-            if (calcularBeneficio(solParcialArista) > calcularBeneficio(mejorSol)){
-                cout << "Entro en el if pa ve" << endl;
-                mejorSol = solParcialArista;
-            }
+            cout << "Entro en el if pa ve" << endl;
+            mejorSol = solParcial;
         }
-
-        cout << "Antes de las aydacencias" << endl;
-
-        g.obtSucesores(v,ladosMaximos);
-
-        for (auto vect=ladosMaximos.begin(); vect!=ladosMaximos.end(); ++vect){
-            cout << "Vector adyacente " << (*vect)->v1 << "  -  " << (*vect)->v2 << endl;
-        }
-
-        for (auto e = ladosMaximos.begin(); e != ladosMaximos.end(); ++e)
-        {
-
-            cout << "Presente sol parcial " << presenteSolParcial(*e,solParcialArista) << endl;
-            // Se guinda aca!!! en los ciclos negativos
-            cout << "Ciclo neg " << cicloNeg(v,*e,solParcialArista,solParcial) << endl;
-            cout << "Repite Ciclo " << repiteCiclo(v,*e,solParcialArista,solParcial) << endl;
-            cout << "Acotamiento " << cumpleAcotamiento(g,*e,solParcialArista,mejorSol) << endl;
-
-            if (
-                (!presenteSolParcial(*e,solParcialArista))
-                && (!cicloNeg(v,*e,solParcialArista,solParcial))
-                && (!repiteCiclo(v,*e,solParcialArista,solParcial)) 
-                && cumpleAcotamiento(g,*e,solParcialArista,mejorSol)
-                ) 
-            {
-                (*e)->t += 1;
-                g.maxBen -= max(0, (*e)->b - (*e)->c);
-                if ((*e)->v1 == v) {
-                    solParcial.push_back((*e)->v2);
-                }
-                else {
-                    solParcial.push_back((*e)->v1);
-                }
-
-                solParcialArista.push_back(*e);
-                break;
-            }
-        }
-        ultimoLado = solParcialArista.back();
-        solParcialArista.pop_back();
-        g.maxBen += max(0, ultimoLado->b - ultimoLado->c);
     }
-    solOpt = mejorSol;
+    cout << "Antes de las aydacencias" << endl;
+    instancia.obtSucesores(v,ladosMaximos);
+
+    /*for (auto vect=ladosMaximos.begin(); vect!=ladosMaximos.end(); ++vect)
+    {
+        cout << "Vector adyacente " << (*vect)->v1 << "  -  " << (*vect)->v2 << endl;
+    }*/
+
+    for (auto e = ladosMaximos.begin(); e != ladosMaximos.end(); ++e)
+    {
+        cout << "Vector adyacente " << (*e)->v1 << "  -  " << (*e)->v2 << endl;
+        cout << "Presente sol parcial " << !presenteSolParcial(*e) << endl;
+        cout << "Ciclo neg " << !cicloNeg(v,*e) << endl;
+        cout << "Repite Ciclo " << !repiteCiclo(v,*e) << endl;
+        cout << "Acotamiento " << cumpleAcotamiento(*e) << endl;
+
+        if (
+            (!presenteSolParcial(*e))
+            && (!cicloNeg(v,*e))
+            && (!repiteCiclo(v,*e)) 
+            && cumpleAcotamiento(*e)
+            ) 
+        {
+            (*e)->t += 1;
+            beneficio_maximo -= max(0, (*e)->b - (*e)->c);
+            solParcial.push_back(*e);
+            buscarProfun();
+        }
+    }
+
+    if (!solParcial.empty()) {
+        beneficio_maximo += max(0, solParcial.back()->b - solParcial.back()->c);
+        solParcial.pop_back();
+    }
+}
+
+void solver_bab(vector<Arista*> &solInicial)
+{
+    mejorSol = solInicial;
+    // Se usa como deposito 0 en lugar de 'd'
+    beneficio_maximo = instancia.maxBen;
+    buscarProfun();
 }
 
 
 int main(int argc, char const *argv[])
 {
-    Grafo instancia;
     vector<Arista *> caminoAristasGreedy;
-    vector<Arista *> caminoOptimo;
-    int greedy=0;
+    int greedy = 0;
 
-    instancia.cargarEjem(argv[1]);
+    //instancia.cargarEjem(argv[1]);
     instancia.cargarInstancias(argv[1]);
     // instancia.imprimirGrafo();
     
@@ -210,13 +211,28 @@ int main(int argc, char const *argv[])
     // Garantizo que no hay ciclos negativos.
     eliminarCiclosNeg(caminoAristasGreedy);
 
+ 
+
+    solver_bab(caminoAristasGreedy);
+
+    cout << "\nGreedy: " << greedy << endl;
+
     for (auto a=caminoAristasGreedy.begin(); a!=caminoAristasGreedy.end(); ++a){
         cout << "Camino " << (*a)->v1 << " - " << (*a)->v2 << endl;
     }
 
-    solver_bab(instancia, caminoAristasGreedy, greedy, caminoOptimo);
+
+    cout << "\nBAB\nBeneficio hallado: " << calcularBeneficio(mejorSol) 
+        << endl;
+
+
+
+    for (auto a = mejorSol.begin(); a != mejorSol.end(); ++a)
+    {
+        cout << "Camino " << (*a)->v1 << " - " << (*a)->v2 << endl;
+    }
     
-    instancia.imprimirGrafo();
+    //instancia.imprimirGrafo();
 
     // Arista* lado = new Arista {6,3,2,4,0,0,0};
     // vector<int> nodoPrueba { 1, 2, 3, 4, 5, 6};

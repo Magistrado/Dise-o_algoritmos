@@ -44,7 +44,6 @@ public:
 int solver_greedy(map<int, vector< Arista* > > &grafo, int verticeObj, vector<Arista *>&caminoAristas) 
 {
     int acumulado = 0, vertice = 1, ben = 0;
-    int aux;
     priority_queue< pair<int,Arista * >, // (beneficio calculado , _) 
         vector< pair<int, Arista * > >, CompararGreddy > ladosMaximos;
     //Iteradores 
@@ -124,7 +123,6 @@ int solver_greedy(map<int, vector< Arista* > > &grafo, int verticeObj, vector<Ar
 }
 
 bool produceBeneficio_greedy(vector<Arista *>ciclo){
-    int i=0;
     int costoArista = 0;
 
     for (int i=0; i<ciclo.size();i++){
@@ -139,10 +137,7 @@ bool produceBeneficio_greedy(vector<Arista *>ciclo){
 }
 
 void eliminarCiclosNeg(vector<Arista *> &camino){
-    int i = 0;
-    int j = 0;
     Arista *eNext;
-    Arista *eNextNext;
 
     vector<Arista *> ciclo;
 
