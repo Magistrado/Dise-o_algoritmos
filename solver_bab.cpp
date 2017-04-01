@@ -161,12 +161,14 @@ void solver_bab(Grafo &g, vector<Arista*> &solInicial,
         {
 
             cout << "Presente sol parcial " << presenteSolParcial(*e,solParcialArista) << endl;
-            //cout << "Ciclo neg " << cicloNeg(v,*e,solParcialArista,solParcial) << endl;
+            // Se guinda aca!!! en los ciclos negativos
+            cout << "Ciclo neg " << cicloNeg(v,*e,solParcialArista,solParcial) << endl;
             cout << "Repite Ciclo " << repiteCiclo(v,*e,solParcialArista,solParcial) << endl;
             cout << "Acotamiento " << cumpleAcotamiento(g,*e,solParcialArista,mejorSol) << endl;
 
             if (
                 (!presenteSolParcial(*e,solParcialArista))
+                && (!cicloNeg(v,*e,solParcialArista,solParcial))
                 && (!repiteCiclo(v,*e,solParcialArista,solParcial)) 
                 && cumpleAcotamiento(g,*e,solParcialArista,mejorSol)
                 ) 
