@@ -128,7 +128,7 @@ bool produceBeneficio_greedy(vector<Arista *>ciclo){
     for (int i=0; i<ciclo.size();i++){
 
         if (ciclo[i]->ida == 1 && ciclo[i]->vuelta == 1){
-            costoArista += (ciclo[i]->b) - 2 * (ciclo[i]->c);
+            costoArista += - (ciclo[i]->c);
         } else {
             costoArista += (ciclo[i]->b) - (ciclo[i]->c);
         }
