@@ -47,7 +47,7 @@ class Comparar
 public:
     bool operator()(Arista* a, Arista * b)
     {
-        return a->b - a->c < b->b - b->c;
+        return a->b > b->b;
     }
 };
 
@@ -65,9 +65,19 @@ public:
         maxBen = 0;
     }
 
-    void obtSucesores(int v, vector<Arista * > &lsIncidentes) {
-        lsIncidentes = vector<Arista*>(graf[v].begin(), graf[v].end());
+    vector<Arista *> obtSucesores(int v) {
+        vector<Arista *> lsIncidentes;
+        Arista * aux;
+
+        for (auto vect = graf[v].begin(); vect!=graf[v].end(); ++vect){
+            lsIncidentes.push_back((*vect));
+            aux = new Arista{(*vect)->v1, (*vect)->v2, (*vect)->c, 0, (*vect)->t, (*vect)->ida, (*vect)->vuelta};
+            lsIncidentes.push_back(aux);
+        }
+
         sort(lsIncidentes.begin(), lsIncidentes.end(), Comparar());
+
+        return lsIncidentes;
     }
 
     void cargarInstancias(string camino) 
